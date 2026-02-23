@@ -19,9 +19,11 @@ def webhook():
     
     if request.method == 'POST':
         data = request.json
-        with open('leads_log.txt', 'a') as f:
-            f.write(f"{datetime.now()} | {json.dumps(data)}\n")
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        log_entry = f"{timestamp} | {json.dumps(data)}\n"
+        print(log_entry)
         return 'OK', 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
